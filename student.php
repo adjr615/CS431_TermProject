@@ -2,6 +2,8 @@
  session_start();
     //declare CWID variable
     $student_id = $_POST['s_id'];
+    include define_class.php;
+    $accounttype = 'S_ID';
     //======== BIGIN INPUT PARSING ===========
     //check for user input errors such as missing CWID or less than 9 digits
     //if error is found, kick the user back to index, following an error msg
@@ -15,7 +17,13 @@
     }elseif(!is_numeric($student_id)){
         $_SESSION['message1'] = "Please enter numeric 9 digits.";
         header("Location: index.php");
-    }else{
+    }elseif(!checkCWID($student_id, $accounttype)){
+        $_SESSION['message1'] = "ID entered not valid!";
+		      header("Location: index1.php");
+    }
+    
+    /*
+    else{
 
         //user entered 9 numeric digits, now check if he/she is in database
 
@@ -49,6 +57,7 @@
             $link->close();
         }
     }
+    */
 ?>
 <!DOCTYPE html>
 <html>
